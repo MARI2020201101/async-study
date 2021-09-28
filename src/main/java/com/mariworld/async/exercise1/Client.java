@@ -41,17 +41,11 @@ public class Client implements Runnable{
         log.info("time : " + sw.getTotalTimeSeconds());
     }
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
-
-
-
-        for(long i=0;i<10000;i++){
+        for(long i=0;i<1000;i++){
             Client client = new Client(i);
             new Thread(client).start();
         }
-
-
-
-    }
+   }
 
 
 }

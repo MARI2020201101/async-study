@@ -14,6 +14,7 @@ class SampleController {
 	@GetMapping("/rest/{index}")
 	public String rest(@PathVariable("index")Long index) throws InterruptedException {
 		log.info("rest {}", index);
+		Thread.sleep(1000);
 		return "rest "+ index;
 	}
 }
@@ -21,8 +22,7 @@ class SampleController {
 public class AsyncStudyApplication {
 
 	public static void main(String[] args) {
-
-		System.setProperty("server.tomcat.max-threads" ,"1");
+		System.setProperty("server.tomcat.threads.max","10");
 		SpringApplication.run(AsyncStudyApplication.class, args);
 	}
 
