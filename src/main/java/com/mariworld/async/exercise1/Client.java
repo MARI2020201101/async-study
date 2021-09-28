@@ -36,25 +36,17 @@ public class Client implements Runnable{
         StopWatch sw = new StopWatch();
         sw.start();
         sendApi();
-        Thread.sleep(100);
+        Thread.sleep(1000);
         sw.stop();
-        System.out.println("time : " + sw.getTotalTimeSeconds());
+        log.info("time : " + sw.getTotalTimeSeconds());
     }
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
-    /*    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setMaxPoolSize(100);
-        executor.initialize();
-*/
 
 
-        for(long i=0;i<100;i++){
 
+        for(long i=0;i<10000;i++){
             Client client = new Client(i);
-
             new Thread(client).start();
-
-          //  executor.execute(client);
         }
 
 
