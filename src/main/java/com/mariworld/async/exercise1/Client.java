@@ -2,18 +2,14 @@ package com.mariworld.async.exercise1;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Component;
+
 import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
@@ -42,13 +38,13 @@ public class Client implements Runnable{
     }
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
 
-        ExecutorService es = Executors.newFixedThreadPool(100);
-        CyclicBarrier barrier = new CyclicBarrier(101);
+        ExecutorService es = Executors.newFixedThreadPool(1000);
+        CyclicBarrier barrier = new CyclicBarrier(1001);
         AtomicLong counter = new AtomicLong(0);
         StopWatch main = new StopWatch();
 
         main.start();
-        for(long i=0;i<100;i++){
+        for(long i=0;i<1000;i++){
         es.submit(()-> {
 
             Client c = new Client(counter.addAndGet(1));
