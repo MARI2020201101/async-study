@@ -22,7 +22,7 @@ class SampleController {
 public class AsyncStudyApplication {
 
 	public static void main(String[] args) {
-		System.setProperty("server.tomcat.threads.max","10");
+		//System.setProperty("server.tomcat.threads.max","10");
 		SpringApplication.run(AsyncStudyApplication.class, args);
 	}
 

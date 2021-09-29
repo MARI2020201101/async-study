@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
 public class Client implements Runnable{
@@ -41,10 +41,29 @@ public class Client implements Runnable{
         log.info("time : " + sw.getTotalTimeSeconds());
     }
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
-        for(long i=0;i<1000;i++){
-            Client client = new Client(i);
-            new Thread(client).start();
+
+        ExecutorService es = Executors.newFixedThreadPool(100);
+        CyclicBarrier barrier = new CyclicBarrier(101);
+        AtomicLong counter = new AtomicLong(0);
+        StopWatch main = new StopWatch();
+
+        main.start();
+        for(long i=0;i<100;i++){
+        es.submit(()-> {
+
+            Client c = new Client(counter.addAndGet(1));
+            c.run();
+            barrier.await();
+            return null;
+            });
         }
+        barrier.await();
+
+        main.stop();
+        log.info("total elapsed time:" + main.getTotalTimeSeconds());
+        es.shutdown();
+        es.awaitTermination(10, TimeUnit.SECONDS);
+
    }
 
 
