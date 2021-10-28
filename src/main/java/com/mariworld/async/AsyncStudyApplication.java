@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,12 +22,21 @@ class SampleController {
 		return "rest "+ index;
 	}
 }
+@RestController
+class SampleControllerV2{
+	@GetMapping("/rest/{hello}/v2/{spring}")
+	public String restV2(@PathVariable("hello") String hello,
+						 @PathVariable("spring") String spring){
+		return hello + spring ;
+	}
+}
+
 @SpringBootApplication
-@EnableAsync
+//@EnableAsync
 public class AsyncStudyApplication {
 
 	public static void main(String[] args) {
-		System.setProperty("server.tomcat.threads.max","1");
+		//System.setProperty("server.tomcat.threads.max","1");
 		SpringApplication.run(AsyncStudyApplication.class, args);
 	}
 
